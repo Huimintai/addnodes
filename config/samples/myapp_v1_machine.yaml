@@ -1,0 +1,12 @@
+apiVersion: myapp.addnodes.io/v1
+kind: Machine
+metadata:
+  labels:
+    app.kubernetes.io/name: machine
+    app.kubernetes.io/instance: machine-sample
+    app.kubernetes.io/part-of: addnodes
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: addnodes
+  name: machine-sample
+spec:
+  # TODO(user): Add fields here
