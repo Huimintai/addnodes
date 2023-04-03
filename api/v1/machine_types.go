@@ -29,14 +29,53 @@ type MachineSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Machine. Edit machine_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	IP       string `json:"ip,omitempty"`
+	Port     int64  `json:"port,omitempty"`
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+	Hostname string `json:"hostname,omitempty"`
 }
 
 // MachineStatus defines the observed state of Machine
 type MachineStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	Conditions []MachineCondition `json:",inline"`
 }
+
+type MachineCondition struct {
+	// Type is the type of the condition.
+	Type string `json:"type,omitempty"`
+	// Status is the status of the condition.
+	// Can be True, False, Unknown.
+	Status ConditionStatus `json:"status,omitempty"`
+	// Last time we probed the condition.
+	// +optional
+	LastProbeTime metav1.Time `json:"lastProbeTime,omitempty"`
+	// Last time the condition transitioned from one status to another.
+	// +optional
+	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty"`
+	// Unique, one-word, CamelCase reason for the condition's last transition.
+	// +optional
+	Reason string `json:"reason,omitempty"`
+	// Human-readable message indicating details about last transition.
+	// +optional
+	Message string `json:"message,omitempty"`
+}
+
+// ConditionStatus defines the status of Condition.
+type ConditionStatus string
+
+// These are valid condition statuses.
+// "ConditionTrue" means a resource is in the condition.
+// "ConditionFalse" means a resource is not in the condition.
+// "ConditionUnknown" means server can't decide if a resource is in the condition
+// or not.
+const (
+	ConditionTrue    ConditionStatus = "True"
+	ConditionFalse   ConditionStatus = "False"
+	ConditionUnknown ConditionStatus = "Unknown"
+)
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
